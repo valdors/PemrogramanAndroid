@@ -4,9 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +49,8 @@ public class firstFragment extends Fragment {
         return fragment;
     }
 
+    private Handler mHandler = new Handler();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +60,36 @@ public class firstFragment extends Fragment {
         }
     }
 
+    private Runnable mToastRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(getActivity().getApplicationContext(),"This is a delayed toast", Toast.LENGTH_SHORT).show();
+            mHandler.postDelayed(this,3000);
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.first_fragment, container, false);
+        View view = inflater.inflate(R.layout.first_fragment, container, false);
+
+        Button iStart = (Button) view.findViewById(R.id.btnStart);
+        iStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    mToastRunnable.run();
+            }
+        });
+
+        Button iStop = (Button) view.findViewById(R.id.btnStop);
+        iStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    mHandler.removeCallbacks(mToastRunnable);
+            }
+        });
+
+        return view;
     }
 }
