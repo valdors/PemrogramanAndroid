@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 Boolean result = db.checkUser(uname, pass);
                 if(result == true){
                     Toast.makeText(LoginActivity.this, "Login Berhasil!", Toast.LENGTH_SHORT).show();
-                    Intent intentMoveToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intentMoveToHome = new Intent(LoginActivity.this, FirebaseActivity.class);
                     startActivity(intentMoveToHome);
                 }else{
                     Toast.makeText(LoginActivity.this, "Username atau Password anda tidak benar!", Toast.LENGTH_SHORT).show();
